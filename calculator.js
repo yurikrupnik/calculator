@@ -23,9 +23,14 @@
         if(e.type === "keypress" && keyCodes.indexOf(e.which) === -1) return;
 
         var input = document.getElementById("calc-input"),
+            /*
+            * btnValue dependency:
+            * 1. if keypress event - check if enter key was pressed, assign "=" if true, get charCode if not
+            * 2. for click event - check if button has glyphicon class, asign "del" if true, get button's inner html if not
+             */
             btnValue = (e.type === "keypress") ?
                 (e.which == 13 ? "=" : String.fromCharCode(e.which)) : // enter works as =
-                this.innerHTML;
+                (this.className.indexOf("glyphicon-arrow-right") > -1 ? "del" : this.innerHTML);
 
                 // todo, fix backspace to delete last char
 
@@ -48,12 +53,12 @@
         } else if(btnValue === "+/-") { // negate number
             input.value = -input.value;
         } else if(btnValue === "sqrt") { // sqrt button
-            if(input.value < 0) { // prevent sqrt operation on negative values
-                alert("Sorry, can not operate sqrt on negative number");
+            if(input.value < 0 || isNaN(Math.sqrt(input.value))) { // prevent sqrt operation on negative values or show NaN
+                alert("Sorry, wrong operation was used");
                 return;
             }
             input.value = Math.sqrt(input.value);
-        } else if(btnValue === "<-") { // erase last char button
+        } else if(btnValue === "del") { // erase last char button
             input.value = input.value.slice(0, -1);
         } else { // default buttons
             if(btnValue === "." && input.value.indexOf(".") >= 0) return; // prevent adding 2 decimals
