@@ -23,16 +23,12 @@
         if(e.type === "keypress" && keyCodes.indexOf(e.which) === -1) return;
 
         var input = document.getElementById("calc-input"),
-            /*
-            * btnValue dependency:
-            * 1. if keypress event - check if enter key was pressed, assign "=" if true, get charCode if not
-            * 2. for click event - check if button has glyphicon class, asign "del" if true, get button's inner html if not
-             */
+            // btnValue dependency:
+            // 1. if keypress event - check if enter key was pressed, assign "=" if true, get charCode if not
+            // 2. for click event - check if button has glyphicon class, asign "del" if true, get button's inner html if not
             btnValue = (e.type === "keypress") ?
-                (e.which == 13 ? "=" : String.fromCharCode(e.which)) : // enter works as =
+                (e.which == 13 ? "=" : String.fromCharCode(e.which)) :
                 (this.className.indexOf("glyphicon-arrow-right") > -1 ? "del" : this.innerHTML);
-
-                // todo, fix backspace to delete last char
 
         if(!calculate.memory) { // create memory property if does not exist to store strings to calculate
             calculate.memory = "";
@@ -43,10 +39,10 @@
             delete calculate.memory;
         } else if(operators.indexOf(btnValue) > -1){ // operator button
             if(!input.value) return; // return if operator pressed twice = input value is empty string
-            calculate.memory = input.value + btnValue;
+            calculate.memory = input.value + btnValue; // save to memory after math operation been pressed
             input.value = "";
         } else if(btnValue === "=") { // evaluate button
-            if (!calculate.memory) return; // returns if no value stored to evaluate
+            if (!calculate.memory) return; // return if no value stored to evaluate
             calculate.memory += input.value;
             input.value = eval(calculate.memory); // evaluate the memory string and delete it
             delete calculate.memory;
