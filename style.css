@@ -6,6 +6,8 @@ body {
 .btn {
     width: 49px;
 }
-.center-block {
+
+.calculator {
     float: none;
+    margin: 5% auto;
 }
