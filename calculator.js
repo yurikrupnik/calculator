@@ -22,10 +22,10 @@
     function calculate(e) {
         if(e.type === "keypress" && keyCodes.indexOf(e.which) === -1) return;
 
-        var input = document.getElementById("calc"),
+        var input = document.getElementById("calc-input"),
             btnValue = (e.type === "keypress") ?
                 (e.which == 13 ? "=" : String.fromCharCode(e.which)) : // enter works as =
-                this.value;
+                this.innerHTML;
 
                 // todo, fix backspace to delete last char
 
