@@ -10,18 +10,25 @@
     var buttons = document.querySelectorAll(".btn"),
         length = buttons.length,
         i,
-        operators = ["+", "-", "*", "/"];
+        operators = ["+", "-", "*", "/"],
+        keyCodes = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, // numbers 0-9
+                    13, 8, 42, 43, 45, 46, 47, 61]; // enter, backspace, *, +, -, ., /, =
 
     for (i = 0; i < length; i++ ) (function (index) {
         buttons[index].addEventListener("click", calculate, false);
     })(i);
-
     document.addEventListener("keypress", calculate, false);
 
-
     function calculate(e) {
+        if(e.type === "keypress" && keyCodes.indexOf(e.which) === -1) return;
+
         var input = document.getElementById("calc"),
-            btnValue = this.value;
+            btnValue = (e.type === "keypress") ?
+                (e.which == 13 ? "=" : String.fromCharCode(e.which)) : // enter works as =
+                this.value;
+
+                // todo, fix backspace to delete last char
+
         if(!calculate.memory) { // create memory property if does not exist to store strings to calculate
             calculate.memory = "";
         }
@@ -49,7 +56,7 @@
         } else if(btnValue === "<-") { // erase last char button
             input.value = input.value.slice(0, -1);
         } else { // default buttons
-            if(btnValue === "." && input.value.substr(-1) === ".") return; // prevent adding 2 decimals
+            if(btnValue === "." && input.value.indexOf(".") >= 0) return; // prevent adding 2 decimals
             input.value += btnValue;
         }
     }
