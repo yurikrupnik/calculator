@@ -16,10 +16,13 @@
         buttons[index].addEventListener("click", calculate, false);
     })(i);
 
+    document.addEventListener("keypress", calculate, false);
+
+
     function calculate(e) {
         var input = document.getElementById("calc"),
             btnValue = this.value;
-        if(!calculate.memory) {
+        if(!calculate.memory) { // create memory property if does not exist to store strings to calculate
             calculate.memory = "";
         }
 
@@ -30,19 +33,28 @@
             if(!input.value) return; // return if operator pressed twice = input value is empty string
             calculate.memory = input.value + btnValue;
             input.value = "";
-        } else if(btnValue === "=") { // eval button
-            if (!calculate.memory) return;
+        } else if(btnValue === "=") { // evaluate button
+            if (!calculate.memory) return; // returns if no value stored to evaluate
             calculate.memory += input.value;
-            input.value = eval(calculate.memory);
+            input.value = eval(calculate.memory); // evaluate the memory string and delete it
             delete calculate.memory;
+        } else if(btnValue === "+/-") { // negate number
+            input.value = -input.value;
+        } else if(btnValue === "sqrt") { // sqrt button
+            if(input.value < 0) { // prevent sqrt operation on negative values
+                alert("Sorry, can not operate sqrt on negative number");
+                return;
+            }
+            input.value = Math.sqrt(input.value);
+        } else if(btnValue === "<-") { // erase last char button
+            input.value = input.value.slice(0, -1);
         } else { // default buttons
-            if(btnValue === input.value.substr(-1)) return; // prevent adding 2 decimals
+            if(btnValue === "." && input.value.substr(-1) === ".") return; // prevent adding 2 decimals
             input.value += btnValue;
         }
     }
 })();
 
-// todo, add negate button, sqrt, erase last char
 
 
 
