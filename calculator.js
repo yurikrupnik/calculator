@@ -12,40 +12,44 @@
         i,
         operators = ["+", "-", "*", "/"],
         keyCodes = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, // numbers 0-9
-                    13, 8, 42, 43, 45, 46, 47, 61]; // enter, backspace, *, +, -, ., /, =
+                    13, 8, 42, 43, 45, 46, 47, 61], // enter, backspace, *, +, -, ., /, =
+        keysData = {
+            "delete": "del",
+            "enter": "="
+        };
 
     for (i = 0; i < length; i++ ) (function (index) {
-        buttons[index].addEventListener("click", calculate, false);
+        buttons[index].addEventListener("click", calcHandler, false);
     })(i);
-    document.addEventListener("keypress", calculate, false);
+    document.addEventListener("keypress", calcHandler, false);
 
-    function calculate(e) {
+    function calcHandler(e) {
         if(e.type === "keypress" && keyCodes.indexOf(e.which) === -1) return;
 
         var input = document.getElementById("calc-input"),
             // btnValue dependency:
             // 1. if keypress event - check if enter key was pressed, assign "=" if true, get charCode if not
-            // 2. for click event - check if button has glyphicon class, asign "del" if true, get button's inner html if not
+            // 2. for click event - check if button has data.cal, asign the value from keysData object if true, get button's inner html if not
             btnValue = (e.type === "keypress") ?
-                (e.which == 13 ? "=" : String.fromCharCode(e.which)) :
-                (this.className.indexOf("glyphicon-arrow-right") > -1 ? "del" : this.innerHTML);
+                (e.which == 13 ? keysData["enter"] : String.fromCharCode(e.which)) :
+                (this.dataset.calc ? keysData[this.dataset.calc] : this.innerHTML);
 
-        if(!calculate.memory) { // create memory property if does not exist to store strings to calculate
-            calculate.memory = "";
+        if(!calcHandler.memory) { // create memory property if does not exist to store strings to calcHandler
+            calcHandler.memory = "";
         }
 
         if(btnValue === "c") { // clear button
             input.value = "";
-            delete calculate.memory;
+            delete calcHandler.memory;
         } else if(operators.indexOf(btnValue) > -1){ // operator button
             if(!input.value) return; // return if operator pressed twice = input value is empty string
-            calculate.memory = input.value + btnValue; // save to memory after math operation been pressed
+            calcHandler.memory = calcHandler.memory + input.value + btnValue; // save to memory after math operation been pressed
             input.value = "";
         } else if(btnValue === "=") { // evaluate button
-            if (!calculate.memory) return; // return if no value stored to evaluate
-            calculate.memory += input.value;
-            input.value = eval(calculate.memory); // evaluate the memory string and delete it
-            delete calculate.memory;
+            if (!calcHandler.memory) return; // return if no value stored to evaluate
+            calcHandler.memory += input.value;
+            input.value = eval(calcHandler.memory); // evaluate the memory string and delete it
+            delete calcHandler.memory;
         } else if(btnValue === "+/-") { // negate number
             input.value = -input.value;
         } else if(btnValue === "sqrt") { // sqrt button
