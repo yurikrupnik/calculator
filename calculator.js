@@ -18,48 +18,51 @@
         };
 
     for (var i = 0; i < length; i++ ) (function (index) {
-        buttons[index].addEventListener("click", calcHandler, false);
+        buttons[index].addEventListener("click", btn_ckick, false);
     })(i);
-    document.addEventListener("keypress", calcHandler, false);
+    document.addEventListener("keypress", doc_keypress, false);
 
-    function calcHandler(e) {
+    function btn_ckick() {
+        var btn = this.dataset.calc ? keysData[this.dataset.calc] : this.innerHTML;
+        calculate(btn);
+    }
+
+    function doc_keypress(e) {
         if(e.type === "keypress" && keyCodes.indexOf(e.which) === -1) return;
+        var key = e.which == 13 ? keysData["enter"] : String.fromCharCode(e.which);
+        calculate(key);
+    }
 
+    function calculate(trigger) {
         var memory = document.getElementById("memory-input");
         var input = document.getElementById("calc-input");
-            // btnValue dependency:
-            // 1. if keypress event - check if enter key was pressed, assign "=" if true, get charCode if not
-            // 2. for click event - check if button has data.cal, asign the value from keysData object if true, get button's inner html if not
-        var btnValue = (e.type === "keypress") ?
-                (e.which == 13 ? keysData["enter"] : String.fromCharCode(e.which)) :
-                (this.dataset.calc ? keysData[this.dataset.calc] : this.innerHTML);
 
-        if(btnValue === "c") { // clear button
+        if(trigger === "c") { // clear button
             input.value = "";
             memory.innerHTML = "&nbsp;";
-        } else if(operators.indexOf(btnValue) > -1){ // operator button
+        } else if(operators.indexOf(trigger) > -1){ // operator button
             if(!input.value) return; // prevent double operations in a row
             memory.innerHTML = memory.innerHTML.indexOf("&nbsp;") === 0 ? // remove &nbsp; for eval that will occur later
-                               memory.innerHTML.slice(0,0) + input.value + btnValue :
-                               memory.innerHTML + input.value + btnValue;
+                               memory.innerHTML.slice(0,0) + input.value + trigger :
+                               memory.innerHTML + input.value + trigger;
             input.value = "";
-        } else if(btnValue === "=") { // evaluate
+        } else if(trigger === "=") { // evaluate
             if (memory.length <= 1) return; // return if no value stored in memory to evaluate
             input.value = eval(memory.innerHTML + input.value); // evaluate the memory string with input's value
             memory.innerHTML = "&nbsp;";
-        } else if(btnValue === "+/-") { // negate
+        } else if(trigger === "+/-") { // negate
             input.value = -input.value;
-        } else if(btnValue === "sqrt") { // sqrt
+        } else if(trigger === "sqrt") { // sqrt
             if(input.value < 0 || isNaN(Math.sqrt(input.value))) { // prevent sqrt operation on negative values or show NaN
                 alert("Sorry, wrong operation was used");
                 return;
             }
             input.value = Math.sqrt(input.value);
-        } else if(btnValue === "del") { // erase last char
+        } else if(trigger === "del") { // erase last char
             input.value = input.value.slice(0, -1);
         } else { // default
-            if(btnValue === "." && input.value.indexOf(".") >= 0) return; // prevent adding 2 decimals
-            input.value += btnValue;
+            if(trigger === "." && input.value.indexOf(".") >= 0) return; // prevent adding 2 decimals
+            input.value += trigger;
         }
     }
 })();
