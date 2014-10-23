@@ -18,11 +18,11 @@
         };
 
     for (var i = 0; i < length; i++ ) (function (index) {
-        buttons[index].addEventListener("click", btn_ckick, false);
+        buttons[index].addEventListener("click", btn_click, false);
     })(i);
     document.addEventListener("keypress", doc_keypress, false);
 
-    function btn_ckick() {
+    function btn_click() {
         var btn = this.dataset.calc ? keysData[this.dataset.calc] : this.innerHTML;
         calculate(btn);
     }

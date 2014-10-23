@@ -65,7 +65,7 @@
             "0": this.num
         };
 
-    function btn_ckick() {
+    function btn_click() {
         var btn = this.dataset.calc ? this.dataset.calc : this.innerHTML;
         operations[btn].call(null, btn); //
     }
@@ -77,7 +77,7 @@
     }
 
     for (var i = 0; i < length; i++ ) (function (index) {
-        buttons[index].addEventListener("click", btn_ckick, false);
+        buttons[index].addEventListener("click", btn_click, false);
     })(i);
     document.addEventListener("keypress", doc_keypress, false);
 })();
