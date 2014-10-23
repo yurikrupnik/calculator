@@ -61,7 +61,8 @@
             "6": this.num,
             "7": this.num,
             "8": this.num,
-            "9": this.num
+            "9": this.num,
+            "0": this.num
         };
 
     function btn_ckick() {
