@@ -37,22 +37,22 @@
                 input.value = "";
                 memory.innerHTML = "&nbsp;";
             },
-            "+": math = function () {
+            "+": math = function (btn) {
                 if(!input.value) return; // prevent double operations in a row
                 memory.innerHTML = memory.innerHTML.indexOf("&nbsp;") === 0 ? // remove &nbsp; for eval that will occur later
-                memory.innerHTML.slice(0,0) + input.value + this :
-                memory.innerHTML + input.value + this;
+                memory.innerHTML.slice(0,0) + input.value + btn :
+                memory.innerHTML + input.value + btn;
                 input.value = "";
             },
             "-": this.math,
             "/": this.math,
             "*": this.math,
-            ".": function () {
-                if(this === "." && input.value.indexOf(".") >= 0) return; // prevent adding 2 decimals
-                input.value += this;
+            ".": function (dot) {
+                if(dot === "." && input.value.indexOf(".") >= 0) return; // prevent adding 2 decimals
+                input.value += dot;
             },
-            "1": num = function () {
-                input.value += this;
+            "1": num = function (num) {
+                input.value += num;
             },
             "2": this.num,
             "3": this.num,
@@ -66,13 +66,13 @@
 
     function btn_ckick() {
         var btn = this.dataset.calc ? this.dataset.calc : this.innerHTML;
-        operations[btn].call(btn); // this = btn atm, alternative call(null, btn) - add parameter to funcs that gonna use btn: math and num
+        operations[btn].call(null, btn); //
     }
 
     function doc_keypress(e) {
         if(e.type === "keypress" && keyCodes.indexOf(e.which) === -1) return;
         var key = e.which == 13 ? "=" : String.fromCharCode(e.which);
-        operations[key].call(key);
+        operations[key].call(null, key);
     }
 
     for (var i = 0; i < length; i++ ) (function (index) {
