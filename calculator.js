@@ -40,8 +40,8 @@
             "+": math = function (btn) {
                 if(!input.value) return; // prevent double operations in a row
                 memory.innerHTML = memory.innerHTML.indexOf("&nbsp;") === 0 ? // remove &nbsp; for eval that will occur later
-                memory.innerHTML.slice(0,0) + input.value + btn :
-                memory.innerHTML + input.value + btn;
+                    memory.innerHTML.slice(0,0) + input.value + btn :
+                    memory.innerHTML + input.value + btn;
                 input.value = "";
             },
             "-": this.math,
