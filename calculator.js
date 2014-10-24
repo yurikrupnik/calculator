@@ -13,14 +13,14 @@
         input = document.getElementById("calc-input"),
         mathOperations = ["+", "-", "*", "/"],
         keyCodes = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, // numbers 0-9
-                    13, 8, 42, 43, 45, 46, 47, 61], // enter, backspace, *, +, -, ., /, =
+                    13, 42, 43, 45, 46, 47, 61], // enter, *, +, -, ., /, =
         operations = {
-            "=": function () {
+            "equal": function () {
                 if (!input.value || memory.innerHTML.indexOf("&nbsp") > -1) return; // return if input value is empty string or if no value stored in memory to evaluate
                 input.value = eval(memory.innerHTML + input.value); // evaluate the memory string with input's value
                 memory.innerHTML = "&nbsp;";
             },
-            "+/-": function () {
+            "negate": function () {
                 input.value = -input.value;
             },
             "sqrt": function () {
@@ -67,12 +67,12 @@
 
     function btn_click() {
         var btn = this.dataset.calc ? this.dataset.calc : this.innerHTML;
-        operations[btn].call(null, btn); //
+        operations[btn].call(null, btn);
     }
 
     function doc_keypress(e) {
-        if(e.type === "keypress" && keyCodes.indexOf(e.which) === -1) return;
-        var key = e.which == 13 ? "=" : String.fromCharCode(e.which);
+        if(keyCodes.indexOf(e.which) === -1) return;
+        var key = e.which == 13 ? "equal" : String.fromCharCode(e.which); // special case for enter to act like as equal
         operations[key].call(null, key);
     }
 
