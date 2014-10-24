@@ -33,7 +33,7 @@
             "delete": function () {
                 input.value = input.value.slice(0, -1);
             },
-            "c": function () {
+            "clear": function () {
                 input.value = "";
                 memory.innerHTML = "&nbsp;";
             },
