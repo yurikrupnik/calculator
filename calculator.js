@@ -11,7 +11,6 @@
         length = buttons.length,
         memory = document.getElementById("memory-input"),
         input = document.getElementById("calc-input"),
-        mathOperations = ["+", "-", "*", "/"],
         keyCodes = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, // numbers 0-9
                     13, 42, 43, 45, 46, 47, 61], // enter, *, +, -, ., /, =
         operations = {
