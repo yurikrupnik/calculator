@@ -12,7 +12,7 @@
         memory = document.getElementById("memory-input"),
         input = document.getElementById("calc-input"),
         operations = {
-            "equal": function () { //
+            "equal": function () {
                 if (!input.value || !memory.innerHTML) {
                     return; // return if input value is empty string or if no value stored in memory to evaluate
                 }
