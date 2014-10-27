@@ -11,8 +11,6 @@
         length = buttons.length,
         memory = document.getElementById("memory-input"),
         input = document.getElementById("calc-input"),
-        keyCodes = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, // numbers 0-9
-                    13, 42, 43, 45, 46, 47, 61],// enter, *, +, -, ., /, =
         operations = {
             "equal": function () { //
                 if (!input.value || !memory.innerHTML) {
@@ -77,10 +75,10 @@
     }
 
     function doc_keypress(e) {
-        if(keyCodes.indexOf(e.which) === -1) {
+        var key = e.which == 13 ? "equal" : String.fromCharCode(e.which); // special case for enter to act like as equal
+        if(!operations[key]){
             return;
         }
-        var key = e.which == 13 ? "equal" : String.fromCharCode(e.which); // special case for enter to act like as equal
         operations[key](key);
     }
 
