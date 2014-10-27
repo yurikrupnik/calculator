@@ -11,3 +11,7 @@ body {
     float: none;
     margin: 5% auto;
 }
+
+#memory-input {
+    height: 20px;
+}

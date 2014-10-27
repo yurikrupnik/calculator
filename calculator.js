@@ -13,23 +13,15 @@
         input = document.getElementById("calc-input"),
         keyCodes = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, // numbers 0-9
                     13, 42, 43, 45, 46, 47, 61],// enter, *, +, -, ., /, =
-        math = function (operation) {
-            if(!input.value) return; // prevent double operations in a row
-            memory.innerHTML = memory.innerHTML.indexOf("&nbsp;") === 0 ? // remove &nbsp; for eval that will occur later
-                memory.innerHTML.slice(0,0) + input.value + operation :
-                memory.innerHTML + input.value + operation;
-            input.value = "";
-        },
-        num = function (num) {
-            input.value += num;
-        },
         operations = {
-            "=": function () {
-                if (!input.value || memory.innerHTML.indexOf("&nbsp") > -1) return; // return if input value is empty string or if no value stored in memory to evaluate
+            "equal": function () { //
+                if (!input.value || !memory.innerHTML) {
+                    return; // return if input value is empty string or if no value stored in memory to evaluate
+                }
                 input.value = eval(memory.innerHTML + input.value); // evaluate the memory string with input's value
-                memory.innerHTML = "&nbsp;";
+                memory.innerHTML = "";
             },
-            "+/-": function () {
+            "negate": function () {
                 input.value = -input.value;
             },
             "sqrt": function () {
@@ -42,39 +34,54 @@
             "delete": function () {
                 input.value = input.value.slice(0, -1);
             },
-            "c": function () {
+            "clear": function () {
                 input.value = "";
-                memory.innerHTML = "&nbsp;";
+                memory.innerHTML = "";
             },
-            "+": math,
-            "-": math,
-            "/": math,
-            "*": math,
-            ".": function (dot) {
-                if(dot === "." && input.value.indexOf(".") >= 0) return; // prevent adding 2 decimals
-                input.value += dot;
+            "+": operate_math,
+            "-": operate_math,
+            "/": operate_math,
+            "*": operate_math,
+            ".": function (decimal) {
+                if(decimal === "." && input.value.indexOf(".") >= 0) {
+                    return; // prevent adding 2 decimals
+                }
+                input.value += decimal;
             },
-            "1": num,
-            "2": num,
-            "3": num,
-            "4": num,
-            "5": num,
-            "6": num,
-            "7": num,
-            "8": num,
-            "9": num,
-            "0": num
+            "1": add_num,
+            "2": add_num,
+            "3": add_num,
+            "4": add_num,
+            "5": add_num,
+            "6": add_num,
+            "7": add_num,
+            "8": add_num,
+            "9": add_num,
+            "0": add_num
         };
+
+    function operate_math(operation) {
+        if(!input.value) {
+            return; // prevent double operations in a row
+        }
+        memory.innerHTML = memory.innerHTML + input.value + operation;
+        input.value = "";
+    }
+    function add_num(num) {
+        input.value += num;
+    }
 
     function btn_click() {
         var btn = this.dataset.calc ? this.dataset.calc : this.innerHTML;
-        operations[btn].call(null, btn);
+        operations[btn](btn);
     }
 
     function doc_keypress(e) {
-        if(keyCodes.indexOf(e.which) === -1) return;
-        var key = e.which == 13 ? "=" : String.fromCharCode(e.which); // special case for enter to act like as equal
-        operations[key].call(null, key);
+        if(keyCodes.indexOf(e.which) === -1) {
+            return;
+        }
+        var key = e.which == 13 ? "equal" : String.fromCharCode(e.which); // special case for enter to act like as equal
+        operations[key](key);
     }
 
     for (var i = 0; i < length; i++ ) (function (index) {
