@@ -3,10 +3,6 @@ body {
     background-color: rgba(128,128,128,0.1);
 }
 
-.btn {
-    width: 49px;
-}
-
 .calculator {
     float: none;
     margin: 5% auto;

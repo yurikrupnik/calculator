@@ -12,47 +12,47 @@
 </head>
 
 <body>
-
-<div class="container">
-    <div class="calculator col-lg-3 col-md-8 col-sm-12">
-        <div class="input-group">
-            <div id="memory-input" class="text-right"></div>
-            <label><input type="text" readonly size="22" id="calc-input" class="text-right"></label>
+    <div class="container">
+        <div class="calculator col-lg-4 col-md-5 col-sm-6 col-xs-10">
+            <div class="form-group">
+                <div id="memory-input" class="text-right"></div>
+                <label for="calc-input"></label>
+                <input type="text" readonly size="22" id="calc-input" class="text-right form-control">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-info col-md-3 col-sm-3 col-xs-3 " value="delete">
+                    <i class="glyphicon glyphicon-arrow-right"></i>
+                </button>
+                <button class="btn btn-info col-md-3 col-sm-3 col-xs-3" value="negate">+/-</button>
+                <button class="btn btn-info col-md-3 col-sm-3 col-xs-3">sqrt</button>
+                <button class="btn btn-primary col-md-3 col-sm-3 col-xs-3">/</button>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default col-md-3 col-sm-3 col-xs-3">7</button>
+                <button class="btn btn-default col-md-3 col-sm-3 col-xs-3">8</button>
+                <button class="btn btn-default col-md-3 col-sm-3 col-xs-3">9</button>
+                <button class="btn btn-primary col-md-3 col-sm-3 col-xs-3">*</button>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default col-md-3 col-sm-3 col-xs-3">4</button>
+                <button class="btn btn-default col-md-3 col-sm-3 col-xs-3">5</button>
+                <button class="btn btn-default col-md-3 col-sm-3 col-xs-3">6</button>
+                <button class="btn btn-primary col-md-3 col-sm-3 col-xs-3">-</button>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default col-md-3 col-sm-3 col-xs-3">1</button>
+                <button class="btn btn-default col-md-3 col-sm-3 col-xs-3">2</button>
+                <button class="btn btn-default col-md-3 col-sm-3 col-xs-3">3</button>
+                <button class="btn btn-primary col-md-3 col-sm-3 col-xs-3">+</button>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default col-md-3 col-sm-3 col-xs-3">0</button>
+                <button class="btn btn-default col-md-3 col-sm-3 col-xs-3">.</button>
+                <button class="btn btn-warning col-md-3 col-sm-3 col-xs-3" value="clear">c</button>
+                <button class="btn btn-danger col-md-3 col-sm-3 col-xs-3" value="equal">=</button>
+            </div>
         </div>
-        <p>
-            <button class="btn btn-info" value="delete">
-                <i class="glyphicon glyphicon-arrow-right"></i>
-            </button>
-            <button class="btn btn-info" value="negate">+/-</button>
-            <button class="btn btn-info">sqrt</button>
-            <button class="btn btn-primary">/</button>
-        </p>
-        <p>
-            <button class="btn btn-default">7</button>
-            <button class="btn btn-default">8</button>
-            <button class="btn btn-default">9</button>
-            <button class="btn btn-primary">*</button>
-        </p>
-        <p>
-            <button class="btn btn-default">4</button>
-            <button class="btn btn-default">5</button>
-            <button class="btn btn-default">6</button>
-            <button class="btn btn-primary">-</button>
-        </p>
-        <p>
-            <button class="btn btn-default">1</button>
-            <button class="btn btn-default">2</button>
-            <button class="btn btn-default">3</button>
-            <button class="btn btn-primary">+</button>
-        </p>
-        <p>
-            <button class="btn btn-default">0</button>
-            <button class="btn btn-default">.</button>
-            <button class="btn btn-warning" value="clear">c</button>
-            <button class="btn btn-danger" value="equal">=</button>
-        </p>
     </div>
-</div>
 
 <script src="calculator.js"></script>
 </body>

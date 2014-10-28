@@ -6,7 +6,7 @@
  */
 
 (function () {
-    // no support for ie9-
+    //no support for ie9-
     var buttons = document.querySelectorAll(".btn"),
         length = buttons.length,
         memory = document.getElementById("memory-input"),
@@ -52,12 +52,13 @@
             "9": add_num,
             "0": add_num
         },
-        keypressMap = {
-            13: operations.equal
-        },
         keydownMap = {
-            8: operations.delete,
-            27: operations.clear
+            8: operations.delete, // backspace
+            27: operations.clear, // esc
+            13: operations.equal, // enter
+            187: operations.equal, // = near the backspace
+            78: operations.negate, // n
+            83: operations.sqrt // s
         };
 
     function operate_math(operation) {
@@ -80,18 +81,15 @@
 
     function btn_click() {
         var btn = this.value ? this.value : this.innerHTML;
-        this.blur();
+        this.blur(); // blur the clicked button for eval via enter
         operations[btn](btn);
     }
 
     function doc_keypress(e) {
-        var which = e.which;
-        var key = String.fromCharCode(which);
+        var key = String.fromCharCode(e.which);
         if(operations[key]) {
             operations[key](key);
         }
-        if(!keypressMap[which]) return;
-        keypressMap[which]();
     }
 
     function doc_keydown(e) {
@@ -109,7 +107,6 @@
     document.addEventListener("keydown", doc_keydown, false);
 })();
 
-// todo  - add keydown for "negate"/shift+n and "sqrt"/shift+s
 
 
 
