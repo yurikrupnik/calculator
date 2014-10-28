@@ -40,12 +40,7 @@
             "-": operate_math,
             "/": operate_math,
             "*": operate_math,
-            ".": function (decimal) {
-                if(decimal === "." && input.value.indexOf(".") >= 0) {
-                    return; // prevent adding 2 decimals
-                }
-                input.value += decimal;
-            },
+            ".": add_decimal,
             "1": add_num,
             "2": add_num,
             "3": add_num,
@@ -56,6 +51,13 @@
             "8": add_num,
             "9": add_num,
             "0": add_num
+        },
+        keypressMap = {
+            13: operations.equal
+        },
+        keydownMap = {
+            8: operations.delete,
+            27: operations.clear
         };
 
     function operate_math(operation) {
@@ -69,26 +71,45 @@
         input.value += num;
     }
 
+    function add_decimal(decimal) {
+        if(decimal === "." && input.value.indexOf(".") >= 0) {
+            return; // prevent adding 2 decimals
+        }
+        input.value += decimal;
+    }
+
     function btn_click() {
-        var btn = this.dataset.calc ? this.dataset.calc : this.innerHTML;
+        var btn = this.value ? this.value : this.innerHTML;
+        this.blur();
         operations[btn](btn);
     }
 
     function doc_keypress(e) {
-        var key = e.which == 13 ? "equal" : String.fromCharCode(e.which); // special case for enter to act like as equal
-        if(!operations[key]){
+        var which = e.which;
+        var key = String.fromCharCode(which);
+        if(operations[key]) {
+            operations[key](key);
+        }
+        if(!keypressMap[which]) return;
+        keypressMap[which]();
+    }
+
+    function doc_keydown(e) {
+        if(!keydownMap[e.which]) {
             return;
         }
-        operations[key](key);
+        keydownMap[e.which]();
+        e.preventDefault();
     }
 
     for (var i = 0; i < length; i++ ) (function (index) {
         buttons[index].addEventListener("click", btn_click, false);
     })(i);
     document.addEventListener("keypress", doc_keypress, false);
+    document.addEventListener("keydown", doc_keydown, false);
 })();
 
-
+// todo  - add keydown for "negate"/shift+n and "sqrt"/shift+s
 
 
 
