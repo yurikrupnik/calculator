@@ -23,7 +23,7 @@
                 input.value = -input.value;
             },
             "sqrt": function () {
-                if(input.value < 0 || isNaN(Math.sqrt(input.value))) { // prevent sqrt operation on negative values or show NaN
+                if (input.value < 0 || isNaN(Math.sqrt(input.value))) { // prevent sqrt operation on negative values or show NaN
                     alert("Sorry, wrong operation was used");
                     return;
                 }
@@ -62,18 +62,19 @@
         };
 
     function operate_math(operation) {
-        if(!input.value) {
+        if (!input.value) {
             return; // prevent double operations in a row
         }
         memory.innerHTML = memory.innerHTML + input.value + operation;
         input.value = "";
     }
+
     function add_num(num) {
         input.value += num;
     }
 
     function add_decimal(decimal) {
-        if(decimal === "." && input.value.indexOf(".") >= 0) {
+        if (decimal === "." && input.value.indexOf(".") >= 0) {
             return; // prevent adding 2 decimals
         }
         input.value += decimal;
@@ -87,20 +88,20 @@
 
     function doc_keypress(e) {
         var key = String.fromCharCode(e.which);
-        if(operations[key]) {
+        if (operations[key]) {
             operations[key](key);
         }
     }
 
     function doc_keydown(e) {
-        if(!keydownMap[e.which]) {
+        if (!keydownMap[e.which]) {
             return;
         }
         keydownMap[e.which]();
         e.preventDefault();
     }
 
-    for (var i = 0; i < length; i++ ) (function (index) {
+    for (var i = 0; i < length; i++) (function (index) {
         buttons[index].addEventListener("click", btn_click, false);
     })(i);
     document.addEventListener("keypress", doc_keypress, false);
