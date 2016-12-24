@@ -106,6 +106,8 @@
     })(i);
     document.addEventListener("keypress", doc_keypress, false);
     document.addEventListener("keydown", doc_keydown, false);
+
+
 })();
 
 
